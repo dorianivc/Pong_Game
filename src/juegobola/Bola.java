@@ -14,14 +14,25 @@ public final class Bola extends Actor {
         if(y>=380){
             deltaY=(deltaY*-1);
         }
-        if(x<=20){
-            deltaX=10;
+        if(x<=22){
+            deltaX=radio+2;
         }
-        if(y<=20){
-            deltaY=10;
+        if(y<=22){
+            deltaY=radio+2;
         }
-         x=x+deltaX;
-         y=y+deltaY;
+        
+        if((y+deltaY)>=380){
+            int dif=380-y;
+            y=y+dif;
+        }else if((y+deltaY)<=21){
+            y=radio+2;
+        }else {
+            y=y+deltaY;
+        }
+        
+        x=x+deltaX;
+        
+         
      }
 
     public int getRadio() {

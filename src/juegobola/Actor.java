@@ -56,7 +56,7 @@ public abstract class Actor {
         color=colo;
     }
     
-    public abstract void move();
+    public abstract void move(Model m);
     
     
 }

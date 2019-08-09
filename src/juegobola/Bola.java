@@ -7,32 +7,32 @@ public final class Bola extends Actor {
      *
      */
     @Override
-     public void move(){
-        if(x>=590){
-            deltaX=(deltaX*-1);
-        }
-        if(y>=380){
-            deltaY=(deltaY*-1);
-        }
-        if(x<=22){
-            deltaX=radio+2;
-        }
-        if(y<=22){
-            deltaY=radio+2;
-        }
-        
-        if((y+deltaY)>=380){
-            int dif=380-y;
-            y=y+dif;
-        }else if((y+deltaY)<=21){
-            y=radio+2;
-        }else {
-            y=y+deltaY;
-        }
-        
-        x=x+deltaX;
-        
-         
+     public void move(Model m){//para configurar el rebote tengo que parase un model por parametro y utilizar los datos de la raqueta
+       //rebote con la raqueta
+      if(y+radio==m.racketa.getY()+ m.racketa.getHeight()){
+          if(x+radio>=m.racketa.getX()-(m.racketa.getWeight()/2)&& x+radio<=m.racketa.getX()+m.racketa.getWeight()){
+              System.out.println("Rebota");
+             
+              deltaY=deltaY*-1;
+          }
+      }  
+       if((deltaX+x)>(m.rectangulo.getW()-radio+ m.rectangulo.x)){
+           deltaX=(deltaX*-1);
+       }else if( (deltaX+x)<radio+m.rectangulo.x){
+           deltaX=(deltaX*-1);
+       }else {
+           x=x+deltaX;
+       }
+       
+        if((deltaY+y)>m.rectangulo.getH()-radio+m.rectangulo.y){
+           deltaY=(deltaY*-1);
+       }else if( (deltaY+y)<radio+m.rectangulo.y){
+           deltaY=(deltaY*-1);
+       }else {
+           y=y+deltaY;
+            
+       }
+            
      }
 
     public int getRadio() {

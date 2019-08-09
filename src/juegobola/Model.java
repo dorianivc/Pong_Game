@@ -13,7 +13,7 @@ public class Model extends Observable{
        this.racketa=new Racketa(500,400,15,15,"red",10,100);
        this.rectangulo= new Rectangulo(20,50,610,400);
    }
-
+    
     public Racketa getRacketa() {
         return racketa;
     }
@@ -39,8 +39,8 @@ public class Model extends Observable{
     }
    
 public void step(){
-    racketa.move();
-    bola.move();
+    racketa.move(this);
+    bola.move(this);
     this.setChanged();
     this.notifyObservers();
 }

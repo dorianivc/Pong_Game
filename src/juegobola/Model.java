@@ -7,11 +7,22 @@ public class Model extends Observable{
    public Racketa racketa;
    public Bola bola;
    public Rectangulo rectangulo;
+   public MarcoRedondo marco;
+ 
+
+    public MarcoRedondo getMarco() {
+        return marco;
+    }
+
+    public void setMarco(MarcoRedondo marco) {
+        this.marco = marco;
+    }
    
    public Model(){
        this.bola=new Bola(20,50,20,20,20,"black");
-       this.racketa=new Racketa(500,400,15,0,"red",10,100);
-       this.rectangulo= new Rectangulo(20,50,610,400);
+       this.racketa=new Racketa(500,400,15,0,"red",20,120);
+       this.rectangulo= new Rectangulo(20,50,601,600);
+       marco= new MarcoRedondo();
    }
     public void start(){
         final int delay= 20;

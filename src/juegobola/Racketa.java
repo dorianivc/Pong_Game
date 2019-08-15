@@ -17,7 +17,16 @@ public class Racketa extends Actor {
         }else{
             x=x+deltaX;
         }
-        y=deltaY+y;
+       if((deltaY+y)>m.rectangulo.getH()-height+m.rectangulo.y){
+           deltaY=(deltaY*-1);
+       }else if( (deltaY+y)<height+m.rectangulo.y){
+           deltaY=(deltaY*-1);
+       }else {
+           y=y+deltaY;
+            
+       }
+        
+        
         
     }
     Racketa(int x, int y, int deltaX, int deltaY, String color, int height, int weight){

@@ -40,7 +40,7 @@ public class Vista extends JFrame implements java.util.Observer {
        this.repaint();
    }
     public Vista(){
-        this.setSize(800, 600);
+        this.setSize(800, 700);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener( new java.awt.event.KeyAdapter()
         {
@@ -83,17 +83,23 @@ public class Vista extends JFrame implements java.util.Observer {
     }*/
     
     void renderModel(Model m, Graphics media){
+       renderMarco(m.marco, media);
        renderRectangule(m.rectangulo, media);
        renderRacket(m.racketa, media);
        renderBall(m.bola, media);
+       
         
+    }
+    void renderMarco(MarcoRedondo mar, Graphics media){
+        media.setColor(Color.red);
+         media.fillOval(mar.x, mar.y, 2*modelo.marco.getRadio(),2*modelo.marco.getRadio());
     }
     void renderRectangule(Rectangulo rec, Graphics media){
           media.setColor(Color.black);
-          media.drawRect(modelo.rectangulo.x, modelo.rectangulo.y, modelo.rectangulo.w, modelo.rectangulo.h);
+            media.drawRect(modelo.rectangulo.x, modelo.rectangulo.y, modelo.rectangulo.w, modelo.rectangulo.h);
     }
    void renderBall(Bola principal, Graphics media){
-              media.setColor(Color.red);
+              media.setColor(Color.green);
               media.fillOval(modelo.bola.x- modelo.bola.getRadio(), modelo.bola.y-modelo.bola.getRadio(), 2*modelo.bola.getRadio(),2*modelo.bola.getRadio() );
           
              

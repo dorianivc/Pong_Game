@@ -15,6 +15,10 @@ public final class Bola extends Actor {
              
               deltaY=deltaY*-1;
           }
+          if(x+radio<=m.racketa.getX()+(m.racketa.getWeight()/2)&& x+radio<=m.racketa.getX()+m.racketa.getWeight()){
+              System.out.println("Rebota2");
+             deltaY=deltaY*-1;
+          }
       }  
        if((deltaX+x)>(m.rectangulo.getW()-radio+ m.rectangulo.x)){
            deltaX=(deltaX*-1);

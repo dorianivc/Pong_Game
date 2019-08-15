@@ -12,4 +12,13 @@ public class Controlador {
         vista.setControl(this);
         vista.setModelo(m);
     }
+    public void move(int flecha){
+       modelo.move(flecha);
+    }
+    public void stopVertical(){
+        modelo.stopVertical();
+    }
+    public void stopHorizontal(){
+        modelo.stopHorizontal();
+    }
 }

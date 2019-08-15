@@ -16,7 +16,7 @@ public class JuegoBola {
            int veces=200;
            for(;;){
                
-            Thread.sleep(100);
+            Thread.sleep(90);
             modelo.step();
           
            }

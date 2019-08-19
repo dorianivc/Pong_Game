@@ -19,7 +19,7 @@ public class Model extends Observable{
     }
    
    public Model(){
-       this.bola=new Bola(20,50,20,20,20,"black");
+       this.bola=new Bola(323,360,20,20,20,"black");
        this.racketa=new Racketa(500,400,15,0,"red",20,120);
        this.rectangulo= new Rectangulo(20,50,601,600);
        marco= new MarcoRedondo();

@@ -21,4 +21,8 @@ public class Controlador {
     public void stopHorizontal(){
         modelo.stopHorizontal();
     }
+
+    void settings(int i, int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.Observable;
 import javax.swing.JFrame;	
 import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
@@ -18,6 +20,23 @@ public class Vista extends JFrame implements java.util.Observer {
     public Controlador controller;
 //ATRUBUTOS
 
+    private void jMenuItem2ActionPerformed(java.awt.ActiveEvent evt){
+        //controller.pause();
+        JTextField esferas= new JTextField("1");
+        JTextField velocidad= new JTextField("2");
+        Object[] message={
+            "Esferas: ",esferas, "Velocidad: ", velocidad
+        };
+        int option=JOptionPane.showConfirmDialog(null, message, "settings",JOptionPane.OK_CANCEL_OPTION);
+        if(option==JOptionPane.OK_OPTION){
+            try{
+                controller.settings((Integer.parseInt(esferas.getText())), Integer.parseInt(velocidad.getText()));
+            }catch(Exception e){
+                
+            }
+        }
+        //controller.activate();
+    }
     public Model getModelo() {
         return modelo;
     }

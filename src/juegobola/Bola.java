@@ -8,8 +8,7 @@ public final class Bola extends Actor {
         int X= (this.x)-max( m.racketa.x,min(this.x, m.racketa.x+ m.racketa.getWeight()));
         int Y=(this.y)-max( m.racketa.y,min(this.y, m.racketa.y+ m.racketa.getHeight()));
         if((X*X+Y*Y)<(radio*radio)){
-            System.out.println("Valor X "+ X);
-            System.out.println("Valor Y "+ Y);
+            
         }
         return (X*X+Y*Y)<(radio*radio);
     }
@@ -29,8 +28,9 @@ public final class Bola extends Actor {
     @Override
      public void move(Model m){//para configurar el rebote tengo que parase un model por parametro y utilizar los datos de la raqueta
        //rebote con la raqueta
-        //System.out.println("Valor X Racketa"+ m.racketa.x);
-        //System.out.println("Valor Y Racketa "+ m.racketa.y);
+    double puntoCentroX=m.marco.x+m.marco.getRadio();
+    double puntoCentroY= m.marco.y+m.marco.getRadio();
+    
        if(colision(m)){
            //deltaX=deltaX*-1;
             deltaY=deltaY*-1;
@@ -46,9 +46,10 @@ public final class Bola extends Actor {
            System.out.println("Valor X Marco= "+ m.marco.x);
            System.out.println("Valor Y Marco= "+ m.marco.y);*/
        }
-       
+        x=x+deltaX;
+        y=y+deltaY;
     
-       if((deltaX+x)>(m.rectangulo.getW()-radio+ m.rectangulo.x)){
+       /*if((deltaX+x)>(m.rectangulo.getW()-radio+ m.rectangulo.x)){
            deltaX=(deltaX*-1);
        }else if( (deltaX+x)<radio+m.rectangulo.x){
            deltaX=(deltaX*-1);
@@ -63,7 +64,7 @@ public final class Bola extends Actor {
        }else {
            y=y+deltaY;
             
-       }
+       }*/
             
      }
 

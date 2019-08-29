@@ -1,12 +1,14 @@
 package juegobola;
 
+import java.io.IOException;
+
 
 public class JuegoBola {
 
      
      
       
-       public static void main(String[] args) throws InterruptedException {    
+       public static void main(String[] args) throws InterruptedException, IOException {    
             
            Model modelo= new Model();
            Vista vista= new Vista();

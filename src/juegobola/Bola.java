@@ -1,8 +1,15 @@
 package juegobola;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
+
 public final class Bola extends Actor {
     private int radio=0;
+    
+    
+    private static String sonido ;
+    
+    
+    
     
         public double angulo(int x1, int x2,int y1,int y2){
       return Math.toDegrees( Math.atan(y2-y1/x2-x1));
@@ -107,8 +114,10 @@ public final class Bola extends Actor {
     public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) {
         super(X,Y,deltax,deltay, Col);
         setRadio(Radio);
+        sonido="media/Space-Transparent.png";
+        
+    
     }
-
     private boolean esPar(int i) {
         return i%2==0;
     }

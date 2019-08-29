@@ -3,22 +3,30 @@ package juegobola;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import javax.swing.JFrame;	
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 
+    
+
 
 public class Vista extends JFrame implements java.util.Observer {
-    
+    private static final String imagen= "media/Space-Transparent.png";
     public Model modelo;
     public Controlador controller;
 //ATRUBUTOS
+    private final BufferedImage ballImage;
 
     private void jMenuItem2ActionPerformed(java.awt.ActiveEvent evt){
         //controller.pause();
@@ -58,7 +66,9 @@ public class Vista extends JFrame implements java.util.Observer {
    public void update(Observable o, Object arg){
        this.repaint();
    }
-    public Vista(){
+    public Vista() throws IOException{
+        File file = new File(imagen);
+        this.ballImage = ImageIO.read(file);
         this.setSize(800, 700);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener( new java.awt.event.KeyAdapter()
@@ -103,8 +113,9 @@ public class Vista extends JFrame implements java.util.Observer {
     }*/
     
     void renderModel(Model m, Graphics media){
+       
+      // renderRectangule(m.rectangulo, media);
        renderMarco(m.marco, media);
-       renderRectangule(m.rectangulo, media);
        renderRacket(m.racketa, media);
        renderBall(m.bola, media);
       // renderLines(m.lineas, media);
@@ -113,8 +124,12 @@ public class Vista extends JFrame implements java.util.Observer {
         
     }
     void renderMarco(MarcoRedondo mar, Graphics media){
-       // media.setColor(Color.red);
-         media.fillOval(mar.x, mar.y, 2*modelo.marco.getRadio(),2*modelo.marco.getRadio());
+        media.setColor(Color.BLACK);
+        media.fillOval(mar.x, mar.y, 2*modelo.marco.getRadio(),2*modelo.marco.getRadio());
+        int x=((int)mar.x-mar.radio)+130;
+        int y=((int)mar.y-mar.getRadio()+170);
+        media.drawImage(ballImage,x,y,this); 
+        
     }
     void renderRectangule(Rectangulo rec, Graphics media){
           media.setColor(Color.black);

@@ -31,7 +31,7 @@ public class Vista extends JFrame implements java.util.Observer {
         if(option==JOptionPane.OK_OPTION){
             try{
                 controller.settings((Integer.parseInt(esferas.getText())), Integer.parseInt(velocidad.getText()));
-            }catch(Exception e){
+            }catch(NumberFormatException e){
                 
             }
         }
@@ -71,7 +71,8 @@ public class Vista extends JFrame implements java.util.Observer {
            public void keyReleased(java.awt.event.KeyEvent evt){
                formKeyReleased(evt);
            }
-        });
+                  } );
+ 
     }
     private void formKeyPressed(java.awt.event.KeyEvent evt){
         switch(evt.getKeyCode()){
@@ -106,11 +107,13 @@ public class Vista extends JFrame implements java.util.Observer {
        renderRectangule(m.rectangulo, media);
        renderRacket(m.racketa, media);
        renderBall(m.bola, media);
+      // renderLines(m.lineas, media);
+    
        
         
     }
     void renderMarco(MarcoRedondo mar, Graphics media){
-        media.setColor(Color.red);
+       // media.setColor(Color.red);
          media.fillOval(mar.x, mar.y, 2*modelo.marco.getRadio(),2*modelo.marco.getRadio());
     }
     void renderRectangule(Rectangulo rec, Graphics media){
@@ -127,6 +130,21 @@ public class Vista extends JFrame implements java.util.Observer {
         media.setColor(Color.blue);
         media.fillRect(modelo.racketa.x, modelo.racketa.y,modelo.racketa.getWeight(), modelo.racketa.getHeight());
         }
+    public void renderLineVertical(Graphics g){
+         g.setColor(Color.BLUE);
+        int ejeX=270;
+        g.drawLine(ejeX, 50 ,ejeX, 650);
+         g.setColor(Color.BLUE);
+        int ejeX2=ejeX+105;
+        g.drawLine(ejeX2, 50 ,ejeX2, 650);
+        
+    }
+    void renderLines(Linea[] lin, Graphics media){
+        for(int i=0;i<10;i++){
+            media.setColor(Color.RED);
+            media.drawLine(lin[i].x1, lin[i].x2 ,lin[i].x3,lin[i].x4);
+        }
+    }
 
     
 }

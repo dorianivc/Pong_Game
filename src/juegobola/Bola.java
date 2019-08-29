@@ -4,6 +4,9 @@ import static java.lang.Integer.min;
 public final class Bola extends Actor {
     private int radio=0;
     
+        public double angulo(int x1, int x2,int y1,int y2){
+      return Math.toDegrees( Math.atan(y2-y1/x2-x1));
+  }
     public boolean colision(Model m){
         int X= (this.x)-max( m.racketa.x,min(this.x, m.racketa.x+ m.racketa.getWeight()));
         int Y=(this.y)-max( m.racketa.y,min(this.y, m.racketa.y+ m.racketa.getHeight()));
@@ -11,6 +14,28 @@ public final class Bola extends Actor {
             
         }
         return (X*X+Y*Y)<(radio*radio);
+    }
+    void puntaje(Model m){
+         if((m.bola.y>=m.lineas[0].x2&&m.bola.y<m.lineas[1].x2)||(m.bola.y>=m.lineas[6].x2&&m.bola.y<=m.lineas[7].x2)){
+            if(m.bola.x>=m.lineas[8].x1&&m.bola.x<=m.lineas[9].x1){
+                System.out.println("Pierde Punto Vertical");
+                m.puntaje--;
+        }
+        }else
+        for(int i=0;i<7;i++){
+            if(m.bola.y>=m.lineas[i].x2&&m.bola.y<m.lineas[i+1].x2){
+           
+                if (!esPar(i)){
+                    System.out.println("Pierde Punto");
+                     m.puntaje--;
+                }else{
+                    System.out.println("Gana Punto");
+                      m.puntaje++;
+                }
+            }
+        }
+       
+        
     }
     public boolean colisionCC(Model m){
         int ax=this.x;
@@ -21,8 +46,7 @@ public final class Bola extends Actor {
         int r2=m.marco.getRadio();
         double distancia;
         distancia = Math.sqrt((ax-bx)*(ax-bx) + (ay-by)*(ay-by));
-       // System.out.println("Distancia: "+ distancia);
-        //System.out.println("Suma de Radios: "+ (r1 + r2));
+       
         return ( (distancia+2*radio) >= (r1 + r2));
        }
     @Override
@@ -36,9 +60,12 @@ public final class Bola extends Actor {
             deltaY=deltaY*-1;
        }
        if(colisionCC(m)){
+          puntaje(m);
+            System.out.println("Puntaje: "+  m.puntaje);
           // System.out.println("COlision CC");
            deltaY=deltaY*-1;
            deltaX=deltaX*-1;
+           
           /* setDeltaX(0);
            setDeltaY(0);
            System.out.println("Valor X Bola= "+ x);
@@ -65,6 +92,7 @@ public final class Bola extends Actor {
            y=y+deltaY;
             
        }*/
+      
             
      }
 
@@ -79,6 +107,10 @@ public final class Bola extends Actor {
     public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) {
         super(X,Y,deltax,deltay, Col);
         setRadio(Radio);
+    }
+
+    private boolean esPar(int i) {
+        return i%2==0;
     }
      
     

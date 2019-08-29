@@ -8,7 +8,8 @@ public class Model extends Observable{
    public Bola bola;
    public Rectangulo rectangulo;
    public MarcoRedondo marco;
-   public Linea[] lineas= new Linea[10];
+   public Linea[] lineas;
+   public int puntaje;
 
     public MarcoRedondo getMarco() {
         return marco;
@@ -21,6 +22,8 @@ public class Model extends Observable{
    public Model(){
        //this.bola=new Bola(323,360,20,20,20,"black");
        marco= new MarcoRedondo();
+       lineas= new Linea[10];
+       puntaje=0;
        this.bola=new Bola(marco.x+marco.getRadio(),marco.y+marco.getRadio(),20,20,20,"black");
        this.racketa=new Racketa(500,400,15,0,"red",20,120);
        this.rectangulo= new Rectangulo(20,50,601,600);
@@ -34,14 +37,15 @@ public class Model extends Observable{
        int ejeY6=ejeY5-95;
        int ejeY7=ejeY6-80;
        lineas[0]=new Linea(ejeX1, ejeY7, ejeX2, ejeY7);
-       lineas[1]= new Linea(ejeX1, ejeY5, ejeX2, ejeY5);
-       lineas[2]= new Linea(ejeX1,ejeY, ejeX2, ejeY);
-       lineas[3]=new Linea(ejeX1, ejeY6, ejeX2, ejeY6);
+        lineas[1]=new Linea(ejeX1, ejeY6, ejeX2, ejeY6);
+       lineas[2]= new Linea(ejeX1, ejeY5, ejeX2, ejeY5);
+       lineas[3]= new Linea(ejeX1,ejeY, ejeX2, ejeY);
        lineas[4]=new Linea(ejeX1, ejeY2, ejeX2, ejeY2);
        lineas[5]=new Linea(ejeX1, ejeY3, ejeX2, ejeY3);
        lineas[6]=new Linea(ejeX1, ejeY4, ejeX2, ejeY4);
-       lineas[7]=new Linea(270, 50, 270, 650);
-       lineas[8]=new Linea(375, 50, 375, 650);
+       lineas[7]= new Linea(ejeX1, ejeY4+45, ejeX2, ejeY4+45);
+       lineas[8]=new Linea(270, 50, 270, 650);
+       lineas[9]=new Linea(375, 50, 375, 650);
      
        
        

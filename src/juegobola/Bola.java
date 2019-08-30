@@ -1,11 +1,12 @@
 package juegobola;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
+import javax.sound.sampled.Clip;
 
 public final class Bola extends Actor {
     private int radio=0;
-    
-    
+    public Clip colision;
+    static String son;
     private static String sonido ;
     
     
@@ -23,14 +24,15 @@ public final class Bola extends Actor {
         return (X*X+Y*Y)<(radio*radio);
     }
     void puntaje(Model m){
-         if((m.bola.y>=m.lineas[0].x2&&m.bola.y<m.lineas[1].x2)||(m.bola.y>=m.lineas[6].x2&&m.bola.y<=m.lineas[7].x2)){
-            if(m.bola.x>=m.lineas[8].x1&&m.bola.x<=m.lineas[9].x1){
+        for(int veces=0;veces<m.bola.size();veces++){
+         if((m.bola.get(veces).y>=m.lineas[0].x2&&m.bola.get(veces).y<m.lineas[1].x2)||(m.bola.get(veces).y>=m.lineas[6].x2&&m.bola.get(veces).y<=m.lineas[7].x2)){
+            if(m.bola.get(veces).x>=m.lineas[8].x1&&m.bola.get(veces).x<=m.lineas[9].x1){
                 System.out.println("Pierde Punto Vertical");
                 m.puntaje--;
         }
         }else
         for(int i=0;i<7;i++){
-            if(m.bola.y>=m.lineas[i].x2&&m.bola.y<m.lineas[i+1].x2){
+            if(m.bola.get(veces).y>=m.lineas[i].x2&&m.bola.get(veces).y<m.lineas[i+1].x2){
            
                 if (!esPar(i)){
                     System.out.println("Pierde Punto");
@@ -41,7 +43,7 @@ public final class Bola extends Actor {
                 }
             }
         }
-       
+        }
         
     }
     public boolean colisionCC(Model m){
@@ -114,7 +116,10 @@ public final class Bola extends Actor {
     public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) {
         super(X,Y,deltax,deltay, Col);
         setRadio(Radio);
-        sonido="media/Space-Transparent.png";
+        sonido="media/pop.mp3";
+       
+        
+        
         
     
     }

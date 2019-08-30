@@ -1,15 +1,16 @@
 
 package juegobola;
 
+import java.util.ArrayList;
 import java.util.Observable;
 public class Model extends Observable{
-       
+   public ArrayList<Bola> bola;    
    public Racketa racketa;
-   public Bola bola;
    public Rectangulo rectangulo;
    public MarcoRedondo marco;
    public Linea[] lineas;
    public int puntaje;
+   public int bolas=1;
 
     public MarcoRedondo getMarco() {
         return marco;
@@ -21,10 +22,11 @@ public class Model extends Observable{
    
    public Model(){
        //this.bola=new Bola(323,360,20,20,20,"black");
+       bola= new ArrayList<>();
        marco= new MarcoRedondo();
        lineas= new Linea[10];
        puntaje=0;
-       this.bola=new Bola(marco.x+marco.getRadio(),marco.y+marco.getRadio(),20,20,20,"black");
+       this.bola.add(new Bola(marco.x+marco.getRadio(),marco.y+marco.getRadio(),20,20,20,"black"));
        this.racketa=new Racketa(500,400,15,0,"red",20,120);
        this.rectangulo= new Rectangulo(20,50,601,600);
        int ejeY=320;
@@ -94,11 +96,11 @@ public void stopHorizontal(){
         this.racketa = racketa;
     }
 
-    public Bola getBola() {
+    public ArrayList<Bola> getBola() {
         return bola;
     }
 
-    public void setBola(Bola bola) {
+    public void setBola(ArrayList<Bola> bola) {
         this.bola = bola;
     }
 
@@ -111,10 +113,24 @@ public void stopHorizontal(){
     }
    
 public void step(){
-    racketa.move(this);
-    bola.move(this);
+    racketa.move(this); 
+    for(int i=0;i<bola.size();i++){
+         bola.get(i).move(this);
+    }
+   
     this.setChanged();
     this.notifyObservers();
+}
+void agregarBolas(){
+    int i= (int) (Math.random() * 150) + 1;
+    bola.add(new Bola(marco.x+marco.getRadio()+i,marco.y+marco.getRadio()+i,20,20,20,"black"));
+    this.bolas++;
+}
+void eliminarBolas(){
+    if(bola.size()>=1){
+        bola.remove((bola.size()-1));
+    }
+    this.bolas--;
 }
 
    @Override

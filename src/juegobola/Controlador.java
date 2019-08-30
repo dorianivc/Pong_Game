@@ -22,8 +22,23 @@ public class Controlador {
         modelo.stopHorizontal();
     }
 
-    void settings(int i, int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void settings(int totalBolas, int parseInt) {
+        
+    if(totalBolas>modelo.bolas){
+       int diferencia=totalBolas-modelo.bolas;
+         for(int j=0;j<diferencia;j++){
+            modelo.agregarBolas();
+            vista.repaint();
+     }
+    }else{
+        int diferencia=(totalBolas-modelo.bolas)*-1;
+         for(int j=0;j<diferencia;j++){
+            modelo.eliminarBolas();
+            vista.repaint();
+     }
+    }
+    
+        
     }
 
     void pause() {

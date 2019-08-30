@@ -37,10 +37,18 @@ public class Controlador {
             vista.repaint();
      }
     }
-    
+    for(int i=0;i<modelo.bolas;i++){
+        modelo.bola.get(i).setDeltaX(parseInt);
+           modelo.bola.get(i).setDeltaY(parseInt);
+    }
         
     }
-
+    Integer getBolas(){
+    return modelo.bolas;
+}
+    Integer getDiferencial(){
+        return -1*modelo.bola.get(0).deltaX;
+    }
     void pause() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

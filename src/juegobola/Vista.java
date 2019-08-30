@@ -197,8 +197,8 @@ public class Vista extends JFrame implements java.util.Observer {
     }                                          
 
     private void jMenuBarSettingsMouseClicked(java.awt.event.MouseEvent evt) {                                              
-     JTextField esferas= new JTextField("1");
-        JTextField velocidad= new JTextField("2");
+     JTextField esferas= new JTextField(Integer.toString(controller.getBolas()));
+        JTextField velocidad= new JTextField(Integer.toString(controller.getDiferencial()));
         Object[] message={
             "Esferas: ",esferas, "Velocidad: ", velocidad
         };

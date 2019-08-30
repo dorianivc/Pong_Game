@@ -10,7 +10,7 @@ public class Model extends Observable{
    public MarcoRedondo marco;
    public Linea[] lineas;
    public int puntaje;
-   public int bolas=1;
+   public Integer bolas=1;
 
     public MarcoRedondo getMarco() {
         return marco;

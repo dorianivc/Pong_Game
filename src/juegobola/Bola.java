@@ -14,11 +14,21 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class Bola extends Actor {
-    private int radio=0;
-    public Clip colision;
     static String son;
     private static String sonido ;
+    private int radio=0;
+    public Clip colision;
     private Clip uh;
+    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        super(X,Y,deltax,deltay, Col);
+        setRadio(Radio);
+        sonido="media/pop.wav";
+        uh=this.loadSound(sonido);
+        
+        
+        
+        
+    }
     
     
     
@@ -125,16 +135,6 @@ public final class Bola extends Actor {
         this.radio = radio;
     }
 
-    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        super(X,Y,deltax,deltay, Col);
-        setRadio(Radio);
-        sonido="media/pop.wav";
-       uh=this.loadSound(sonido);
-        
-        
-        
-    
-    }
     
     Clip loadSound(String Path) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
        

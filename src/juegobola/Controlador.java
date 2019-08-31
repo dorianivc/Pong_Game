@@ -1,11 +1,17 @@
 
 package juegobola;
 
+import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 public class Controlador {
     Model modelo;
     Vista vista;
-    
+    Integer getPuntaje(){
+        return modelo.puntaje;
+    }
     public Controlador(Model m, Vista vi){
         modelo=m;
         vista=vi;
@@ -22,8 +28,8 @@ public class Controlador {
         modelo.stopHorizontal();
     }
 
-    void settings(int totalBolas, int parseInt) {
-        
+    void settings(int totalBolas, int parseInt) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    if(totalBolas>0){   
     if(totalBolas>modelo.bolas){
        int diferencia=totalBolas-modelo.bolas;
          for(int j=0;j<diferencia;j++){
@@ -40,6 +46,7 @@ public class Controlador {
     for(int i=0;i<modelo.bolas;i++){
         modelo.bola.get(i).setDeltaX(parseInt);
            modelo.bola.get(i).setDeltaY(parseInt);
+    }
     }
         
     }

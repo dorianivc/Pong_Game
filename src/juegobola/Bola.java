@@ -1,14 +1,24 @@
 package juegobola;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class Bola extends Actor {
     private int radio=0;
     public Clip colision;
     static String son;
     private static String sonido ;
-    
+    private Clip uh;
     
     
     
@@ -27,7 +37,7 @@ public final class Bola extends Actor {
         for(int veces=0;veces<m.bola.size();veces++){
          if((m.bola.get(veces).y>=m.lineas[0].x2&&m.bola.get(veces).y<m.lineas[1].x2)||(m.bola.get(veces).y>=m.lineas[6].x2&&m.bola.get(veces).y<=m.lineas[7].x2)){
             if(m.bola.get(veces).x>=m.lineas[8].x1&&m.bola.get(veces).x<=m.lineas[9].x1){
-                System.out.println("Pierde Punto Vertical");
+               
                 m.puntaje--;
         }
         }else
@@ -35,10 +45,10 @@ public final class Bola extends Actor {
             if(m.bola.get(veces).y>=m.lineas[i].x2&&m.bola.get(veces).y<m.lineas[i+1].x2){
            
                 if (!esPar(i)){
-                    System.out.println("Pierde Punto");
+                  
                      m.puntaje--;
                 }else{
-                    System.out.println("Gana Punto");
+                    
                       m.puntaje++;
                 }
             }
@@ -69,8 +79,10 @@ public final class Bola extends Actor {
             deltaY=deltaY*-1;
        }
        if(colisionCC(m)){
+          uh.setFramePosition(0);
+          uh.start();
+          uh.setFramePosition(0);
           puntaje(m);
-            System.out.println("Puntaje: "+  m.puntaje);
           // System.out.println("COlision CC");
            deltaY=deltaY*-1;
            deltaX=deltaX*-1;
@@ -113,15 +125,36 @@ public final class Bola extends Actor {
         this.radio = radio;
     }
 
-    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) {
+    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         super(X,Y,deltax,deltay, Col);
         setRadio(Radio);
-        sonido="media/pop.mp3";
-       
+        sonido="media/pop.wav";
+       uh=this.loadSound(sonido);
         
         
         
     
+    }
+    
+    Clip loadSound(String Path) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
+       
+        try{
+           File file= new File(Path);
+          AudioInputStream audioInputStream=AudioSystem.getAudioInputStream(file);
+           AudioFormat soundFormat= audioInputStream.getFormat();
+           int soundSize=(int)(soundFormat.getFrameSize()*audioInputStream.getFrameLength());
+           byte[] soundData= new byte[soundSize];
+           DataLine.Info soundInfo= new DataLine.Info(Clip.class, soundFormat, soundSize);
+           audioInputStream.read(soundData,0,soundSize);
+           Clip clip=(Clip)AudioSystem.getLine(soundInfo);
+           clip.open(soundFormat,soundData,0 ,soundSize);
+           return clip;
+           
+           
+            
+        }catch(IOException | LineUnavailableException | UnsupportedAudioFileException e){
+            return null;
+        }
     }
     private boolean esPar(int i) {
         return i%2==0;

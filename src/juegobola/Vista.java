@@ -4,14 +4,21 @@ package juegobola;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import javax.swing.JFrame;	
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,7 +30,7 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 public class Vista extends JFrame implements java.util.Observer {
-    
+    private javax.swing.JTextField Puntaje;
      private javax.swing.JMenuBar BarraMenu;
   private javax.swing.JMenu JMenuFileExit;
   private javax.swing.JLayeredPane jLayeredPane1;
@@ -34,29 +41,16 @@ public class Vista extends JFrame implements java.util.Observer {
   private javax.swing.JMenu jMenuBarSettings;
     private static final String imagen= "media/Space-Transparent.png";
     private static final String imagen2= "media/racket.png";
+     private static final String ball="media/ball.png";
     public Model modelo;
     public Controlador controller;
 //ATRUBUTOS
+   
     private final BufferedImage ballImage;
      private final BufferedImage racketImage;
-
-    private void jMenuItem2ActionPerformed(java.awt.ActiveEvent evt){
-        //controller.pause();
-        JTextField esferas= new JTextField("1");
-        JTextField velocidad= new JTextField("2");
-        Object[] message={
-            "Esferas: ",esferas, "Velocidad: ", velocidad
-        };
-        int option=JOptionPane.showConfirmDialog(null, message, "settings",JOptionPane.OK_CANCEL_OPTION);
-        if(option==JOptionPane.OK_OPTION){
-            try{
-                controller.settings((Integer.parseInt(esferas.getText())), Integer.parseInt(velocidad.getText()));
-            }catch(NumberFormatException e){
-                
-            }
-        }
-        //controller.activate();
-    }
+    private final BufferedImage ball2Image;
+    private javax.swing.JButton Boton;
+ 
     public Model getModelo() {
         return modelo;
     }
@@ -79,6 +73,7 @@ public class Vista extends JFrame implements java.util.Observer {
        this.repaint();
    }
     public Vista() throws IOException{
+        Puntaje = new javax.swing.JTextField();
          jLayeredPane1 = new javax.swing.JLayeredPane();
         BarraMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -117,7 +112,15 @@ public class Vista extends JFrame implements java.util.Observer {
         jMenuBarSettings.setText("Settings");
         jMenuBarSettings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuBarSettingsMouseClicked(evt);
+                try {
+                    jMenuBarSettingsMouseClicked(evt);
+                } catch (UnsupportedAudioFileException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         jMenu2.add(jMenuBarSettings);
@@ -126,7 +129,7 @@ public class Vista extends JFrame implements java.util.Observer {
 
         jMenuAbout.setText("About");
 
-        jMenuAboutDogeBall.setText("Doge Ball");
+        jMenuAboutDogeBall.setText("Dodge Ball");
         jMenuAboutDogeBall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuAboutDogeBallMouseClicked(evt);
@@ -135,12 +138,17 @@ public class Vista extends JFrame implements java.util.Observer {
         jMenuAbout.add(jMenuAboutDogeBall);
 
         BarraMenu.add(jMenuAbout);
+        
+        
+
 
         setJMenuBar(BarraMenu);
         File file = new File(imagen);
         File file2 = new File(imagen2);
+        File file3= new File(ball);
         this.ballImage = ImageIO.read(file);
         this.racketImage=ImageIO.read(file2);
+        this.ball2Image= ImageIO.read(file3);
         this.setContentPane(new JPanel(){
             @Override
             public void paint(Graphics g){
@@ -163,8 +171,34 @@ public class Vista extends JFrame implements java.util.Observer {
                formKeyReleased(evt);
            }
                   } );
- 
+        
+        
+        
     }
+    private void renderPuntos(Model m){
+        Puntaje.setBackground(new java.awt.Color(0, 0, 0));
+        Puntaje.setFont(new java.awt.Font("Engravers MT", 3, 40)); // NOI18N
+        Puntaje.setForeground(new java.awt.Color(255, 255, 255));
+        Puntaje.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        Puntaje.setText("1");
+        Puntaje.setBorder(null);
+        Puntaje.setMinimumSize(new java.awt.Dimension(100, 100));
+        Puntaje.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                PuntajePropertyChange(evt);
+            }
+
+            private void PuntajePropertyChange(PropertyChangeEvent evt) {
+                Puntaje.setText(Integer.toString(controller.getPuntaje()));
+            }
+        });
+        getContentPane().add(Puntaje);
+        Puntaje.setBounds(600, 20, 230, 51);
+
+    }
+    
+    
     private void formKeyPressed(java.awt.event.KeyEvent evt){
         switch(evt.getKeyCode()){
             case KeyEvent.VK_UP: controller.move(Model.ARR);break;
@@ -184,6 +218,7 @@ public class Vista extends JFrame implements java.util.Observer {
     public void paint(Graphics g){
         super.paint(g);
         this.renderModel(modelo,g);
+        
     }
 
     /*@Override
@@ -193,10 +228,10 @@ public class Vista extends JFrame implements java.util.Observer {
     System.out.println(html);
     }*/
        private void JMenuFileExitMouseClicked(java.awt.event.MouseEvent evt) {                                           
-        // TODO add your handling code here:
+       System.exit(0);
     }                                          
 
-    private void jMenuBarSettingsMouseClicked(java.awt.event.MouseEvent evt) {                                              
+    private void jMenuBarSettingsMouseClicked(java.awt.event.MouseEvent evt) throws UnsupportedAudioFileException, LineUnavailableException, IOException {                                              
      JTextField esferas= new JTextField(Integer.toString(controller.getBolas()));
         JTextField velocidad= new JTextField(Integer.toString(controller.getDiferencial()));
         Object[] message={
@@ -212,19 +247,32 @@ public class Vista extends JFrame implements java.util.Observer {
         }
     }                                             
 
-    private void jMenuAboutDogeBallMouseClicked(java.awt.event.MouseEvent evt) {                                                
-        // TODO add your handling code here:
+    private void jMenuAboutDogeBallMouseClicked(java.awt.event.MouseEvent evt) {                                               
+        Object[] message={
+            "Dogde Ball 1.0. Programación III. Escuela de Informatica. Universdad Nacional"
+                + "\nProgramado por Dorian Vallecillo Calderón"
+        };
+          int option=JOptionPane.showConfirmDialog(null, message, "About",JOptionPane.PLAIN_MESSAGE);
+        if(option==JOptionPane.OK_OPTION){
+            try{
+            }catch(NumberFormatException e){
+                
+            }
+        }
     }
     
     void renderModel(Model m, Graphics media){
        
      // renderRectangule(m.rectangulo, media);
-       renderMarco(m.marco, media);
+       //renderMarco(m.marco, media);
        renderRacket(m.racketa, media);
-       //renderLines(m.lineas, media);
+       renderZonas(m.zonas, media);
+       //renderLines(m.lineas,media);
        for(int i=0;i<m.bolas;i++){
        renderBall(m.bola.get(i), media);
        }
+       renderPuntos(m);
+       
        
         
     }
@@ -241,10 +289,10 @@ public class Vista extends JFrame implements java.util.Observer {
             media.drawRect(modelo.rectangulo.x, modelo.rectangulo.y, modelo.rectangulo.w, modelo.rectangulo.h);
             
     }
-   void renderBall(Bola principal, Graphics media){
-    media.setColor(Color.green);
-    media.fillOval(principal.x-principal.getRadio(), principal.y-principal.getRadio(), 2*principal.getRadio(),2*principal.getRadio() );         
-          }
+   void renderBall(Bola r, Graphics media){
+    media.drawImage(this.ball2Image,r.x,r.y,this);
+    
+       }
     void renderRacket(Racketa r, Graphics media){
         //media.setColor(Color.blue);
         //media.fillRect(modelo.racketa.x, modelo.racketa.y,modelo.racketa.getWeight(), modelo.racketa.getHeight());
@@ -265,6 +313,25 @@ public class Vista extends JFrame implements java.util.Observer {
             media.drawLine(lin[i].x1, lin[i].x2 ,lin[i].x3,lin[i].x4);
         }
     }
-
+void renderZonas(ArrayList<Linea> zon, Graphics media){
+    int c=0;
+    for(int i=0;i<zon.size()-2;i++){
+        
+        if(i%2==0){
+            c++;
+        }
+        if(c%2==0){
+            media.setColor(Color.green);
+            media.drawLine(zon.get(i).x1, zon.get(i).x2 ,zon.get(i).x3,zon.get(i).x4);
+        }else{
+            media.setColor(Color.red);
+            media.drawLine(zon.get(i).x1, zon.get(i).x2 ,zon.get(i).x3,zon.get(i).x4);
+        }
+        media.setColor(Color.red);
+        media.drawLine(zon.get(zon.size()-2).x1, zon.get(zon.size()-2).x2 ,zon.get(zon.size()-2).x3,zon.get(zon.size()-2).x4);
+        media.setColor(Color.red);
+        media.drawLine(zon.get(zon.size()-1).x1, zon.get(zon.size()-1).x2 ,zon.get(zon.size()-1).x3,zon.get(zon.size()-1).x4);
+}
     
+}
 }

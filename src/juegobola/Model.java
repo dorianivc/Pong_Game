@@ -1,14 +1,18 @@
 
 package juegobola;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 public class Model extends Observable{
    public ArrayList<Bola> bola;    
    public Racketa racketa;
    public Rectangulo rectangulo;
    public MarcoRedondo marco;
    public Linea[] lineas;
+   public ArrayList<Linea> zonas;
    public int puntaje;
    public Integer bolas=1;
 
@@ -20,11 +24,12 @@ public class Model extends Observable{
         this.marco = marco;
     }
    
-   public Model(){
+   public Model() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
        //this.bola=new Bola(323,360,20,20,20,"black");
        bola= new ArrayList<>();
        marco= new MarcoRedondo();
        lineas= new Linea[10];
+       zonas= new ArrayList<>();
        puntaje=0;
        this.bola.add(new Bola(marco.x+marco.getRadio(),marco.y+marco.getRadio(),20,20,20,"black"));
        this.racketa=new Racketa(500,400,15,0,"red",20,120);
@@ -48,6 +53,27 @@ public class Model extends Observable{
        lineas[7]= new Linea(ejeX1, ejeY4+45, ejeX2, ejeY4+45);
        lineas[8]=new Linea(270, 50, 270, 650);
        lineas[9]=new Linea(375, 50, 375, 650);
+       
+       int ejeX11= ejeX1;
+       ejeX11= ejeX11-45;
+       int ejeX12=45;
+       zonas.add( new Linea(ejeX11, ejeY5, ejeX11, ejeY6));
+       zonas.add( new Linea(ejeX12, ejeY5, ejeX12, ejeY6));
+       zonas.add( new Linea(ejeX1, ejeY5, ejeX1,ejeY));
+       zonas.add( new Linea(ejeX12-25, ejeY5, ejeX12-25,ejeY));
+        zonas.add( new Linea(ejeX1,ejeY, ejeX1, ejeY2));
+       zonas.add( new Linea(ejeX12-25,ejeY, ejeX12-25, ejeY2));
+      
+       zonas.add( new Linea(ejeX1-40, ejeY2, ejeX1-40, ejeY3));
+        zonas.add( new Linea(ejeX12, ejeY2, ejeX12, ejeY3));
+        
+        
+       zonas.add( new Linea(ejeX1-55, ejeY3, ejeX1-55, ejeY4));
+       zonas.add( new Linea(ejeX12+55, ejeY3, ejeX12+55, ejeY4));
+       
+       zonas.add( new Linea(270, 60, 375, 60));
+       int ejeY22= 650;
+       zonas.add( new Linea(270, ejeY4+45, 375, ejeY4+45));
      
        
        
@@ -121,7 +147,7 @@ public void step(){
     this.setChanged();
     this.notifyObservers();
 }
-void agregarBolas(){
+void agregarBolas() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
     int i= (int) (Math.random() * 150) + 1;
     bola.add(new Bola(marco.x+marco.getRadio()+i,marco.y+marco.getRadio()+i,20,20,20,"black"));
     this.bolas++;

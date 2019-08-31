@@ -1,6 +1,8 @@
 package juegobola;
 
 import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -10,7 +12,7 @@ public class JuegoBola {
      
      
       
-       public static void main(String[] args) throws InterruptedException, IOException {    
+       public static void main(String[] args) throws InterruptedException, IOException, UnsupportedAudioFileException, LineUnavailableException {    
             
        /*    JTextField esferas= new JTextField("1");
         JTextField velocidad= new JTextField("2");

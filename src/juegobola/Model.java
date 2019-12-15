@@ -7,6 +7,10 @@ import java.util.Observable;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 public class Model extends Observable{
+    static final int  ARR=2;
+    static final int DER= 3;
+    static final int ABJ=-2;
+    static final int IZQ=-3;
    public ArrayList<Bola> bola;    
    public Racketa racketa;
    public Rectangulo rectangulo;
@@ -15,15 +19,6 @@ public class Model extends Observable{
    public ArrayList<Linea> zonas;
    public int puntaje;
    public Integer bolas=1;
-
-    public MarcoRedondo getMarco() {
-        return marco;
-    }
-
-    public void setMarco(MarcoRedondo marco) {
-        this.marco = marco;
-    }
-   
    public Model() throws UnsupportedAudioFileException, IOException, LineUnavailableException{
        //this.bola=new Bola(323,360,20,20,20,"black");
        bola= new ArrayList<>();
@@ -44,7 +39,7 @@ public class Model extends Observable{
        int ejeY6=ejeY5-95;
        int ejeY7=ejeY6-80;
        lineas[0]=new Linea(ejeX1, ejeY7, ejeX2, ejeY7);
-        lineas[1]=new Linea(ejeX1, ejeY6, ejeX2, ejeY6);
+       lineas[1]=new Linea(ejeX1, ejeY6, ejeX2, ejeY6);
        lineas[2]= new Linea(ejeX1, ejeY5, ejeX2, ejeY5);
        lineas[3]= new Linea(ejeX1,ejeY, ejeX2, ejeY);
        lineas[4]=new Linea(ejeX1, ejeY2, ejeX2, ejeY2);
@@ -61,23 +56,32 @@ public class Model extends Observable{
        zonas.add( new Linea(ejeX12, ejeY5, ejeX12, ejeY6));
        zonas.add( new Linea(ejeX1, ejeY5, ejeX1,ejeY));
        zonas.add( new Linea(ejeX12-25, ejeY5, ejeX12-25,ejeY));
-        zonas.add( new Linea(ejeX1,ejeY, ejeX1, ejeY2));
+       zonas.add( new Linea(ejeX1,ejeY, ejeX1, ejeY2));
        zonas.add( new Linea(ejeX12-25,ejeY, ejeX12-25, ejeY2));
       
        zonas.add( new Linea(ejeX1-40, ejeY2, ejeX1-40, ejeY3));
-        zonas.add( new Linea(ejeX12, ejeY2, ejeX12, ejeY3));
-        
-        
+       zonas.add( new Linea(ejeX12, ejeY2, ejeX12, ejeY3));
+       
+       
        zonas.add( new Linea(ejeX1-55, ejeY3, ejeX1-55, ejeY4));
        zonas.add( new Linea(ejeX12+55, ejeY3, ejeX12+55, ejeY4));
        
        zonas.add( new Linea(270, 60, 375, 60));
        int ejeY22= 650;
        zonas.add( new Linea(270, ejeY4+45, 375, ejeY4+45));
-     
+       
        
        
    }
+
+    public MarcoRedondo getMarco() {
+        return marco;
+    }
+
+    public void setMarco(MarcoRedondo marco) {
+        this.marco = marco;
+    }
+   
     public void start(){
         final int delay= 20;
         Runnable code = null;
@@ -166,10 +170,6 @@ void eliminarBolas(){
     notifyObservers();
 }
 
-   static final int  ARR=2;
-   static final int DER= 3;
-   static final int ABJ=-2;
-   static final int IZQ=-3;
 
 
     public int getARR() {

@@ -14,14 +14,17 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class Bola extends Actor {
-    private int radio=0;
-    public Clip colision;
     static String son;
     private static String sonido ;
+    private int radio=0;
+    public Clip colision;
     private Clip uh;
-    
-    
-    
+    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        super(X,Y,deltax,deltay, Col);
+        setRadio(Radio);
+        sonido="media/pop.wav";
+        uh=this.loadSound(sonido);        
+    }    
         public double angulo(int x1, int x2,int y1,int y2){
       return Math.toDegrees( Math.atan(y2-y1/x2-x1));
   }
@@ -65,7 +68,6 @@ public final class Bola extends Actor {
         int r2=m.marco.getRadio();
         double distancia;
         distancia = Math.sqrt((ax-bx)*(ax-bx) + (ay-by)*(ay-by));
-       
         return ( (distancia+2*radio) >= (r1 + r2));
        }
     @Override
@@ -73,7 +75,6 @@ public final class Bola extends Actor {
        //rebote con la raqueta
     double puntoCentroX=m.marco.x+m.marco.getRadio();
     double puntoCentroY= m.marco.y+m.marco.getRadio();
-    
        if(colision(m)){
            //deltaX=deltaX*-1;
             deltaY=deltaY*-1;
@@ -83,38 +84,11 @@ public final class Bola extends Actor {
           uh.start();
           uh.setFramePosition(0);
           puntaje(m);
-          // System.out.println("COlision CC");
            deltaY=deltaY*-1;
            deltaX=deltaX*-1;
-           
-          /* setDeltaX(0);
-           setDeltaY(0);
-           System.out.println("Valor X Bola= "+ x);
-           System.out.println("Valor Y Bola= "+ y);
-           System.out.println("Valor X Marco= "+ m.marco.x);
-           System.out.println("Valor Y Marco= "+ m.marco.y);*/
        }
         x=x+deltaX;
-        y=y+deltaY;
-    
-       /*if((deltaX+x)>(m.rectangulo.getW()-radio+ m.rectangulo.x)){
-           deltaX=(deltaX*-1);
-       }else if( (deltaX+x)<radio+m.rectangulo.x){
-           deltaX=(deltaX*-1);
-       }else {
-           x=x+deltaX;
-       }
-       
-        if((deltaY+y)>m.rectangulo.getH()-radio+m.rectangulo.y){
-           deltaY=(deltaY*-1);
-       }else if( (deltaY+y)<radio+m.rectangulo.y){
-           deltaY=(deltaY*-1);
-       }else {
-           y=y+deltaY;
-            
-       }*/
-      
-            
+        y=y+deltaY;            
      }
 
     public int getRadio() {
@@ -125,16 +99,6 @@ public final class Bola extends Actor {
         this.radio = radio;
     }
 
-    public Bola(int X, int Y, int deltax, int deltay, int Radio, String Col) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        super(X,Y,deltax,deltay, Col);
-        setRadio(Radio);
-        sonido="media/pop.wav";
-       uh=this.loadSound(sonido);
-        
-        
-        
-    
-    }
     
     Clip loadSound(String Path) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
        

@@ -9,14 +9,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Controlador {
     Model modelo;
     Vista vista;
-    Integer getPuntaje(){
-        return modelo.puntaje;
-    }
     public Controlador(Model m, Vista vi){
         modelo=m;
         vista=vi;
         vista.setControl(this);
         vista.setModelo(m);
+    }
+    Integer getPuntaje(){
+        return modelo.puntaje;
     }
     public void move(int flecha){
        modelo.move(flecha);
@@ -29,7 +29,7 @@ public class Controlador {
     }
 
     void settings(int totalBolas, int parseInt) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-    if(totalBolas>0){   
+    if(totalBolas>0&&totalBolas<=100){   
     if(totalBolas>modelo.bolas){
        int diferencia=totalBolas-modelo.bolas;
          for(int j=0;j<diferencia;j++){

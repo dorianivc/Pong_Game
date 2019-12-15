@@ -7,6 +7,13 @@ public abstract class Actor {
     protected  int deltaX=0;
     protected  int deltaY=0;
     protected  String color=" ";
+    public Actor(int x, int y, int H, int K, String colo) {
+        this.x=x;
+        this.y=y;
+        deltaX=H;
+        deltaY=K;
+        color=colo;
+    }
 
     public String getColor() {
         return color;
@@ -48,13 +55,6 @@ public abstract class Actor {
         this.deltaY = deltaY;
     }
 
-    public Actor(int x, int y, int H, int K, String colo) {
-        this.x=x;
-        this.y=y;
-        deltaX=H;
-        deltaY=K;
-        color=colo;
-    }
     
     public abstract void move(Model m);
     

@@ -8,6 +8,11 @@ import static java.lang.Integer.min;
 public class Racketa extends Actor {
     private int height=0;
     private int weight=0;
+    Racketa(int x, int y, int deltaX, int deltaY, String color, int height, int weight){
+        super(x,y,deltaX,deltaY, color);
+        this.height=height;
+        this.weight=weight;
+    }
     
     public boolean colisionDer(Model m){
         
@@ -53,11 +58,6 @@ public class Racketa extends Actor {
         
         
     
-    Racketa(int x, int y, int deltaX, int deltaY, String color, int height, int weight){
-        super(x,y,deltaX,deltaY, color);
-        this.height=height;
-        this.weight=weight;
-    }
 
     public int getHeight() {
         return height;

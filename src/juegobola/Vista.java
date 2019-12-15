@@ -3,26 +3,22 @@ package juegobola;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Observable;
-import javax.swing.JFrame;	
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 
@@ -30,6 +26,9 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
 
 
 public class Vista extends JFrame implements java.util.Observer {
+    private static final String imagen= "media/Space-Transparent.png";
+    private static final String imagen2= "media/racket.png";
+    private static final String ball="media/ball.png";
     private javax.swing.JTextField Puntaje;
      private javax.swing.JMenuBar BarraMenu;
   private javax.swing.JMenu JMenuFileExit;
@@ -39,9 +38,6 @@ public class Vista extends JFrame implements java.util.Observer {
   private javax.swing.JMenu jMenuAbout;
   private javax.swing.JMenu jMenuAboutDogeBall;
   private javax.swing.JMenu jMenuBarSettings;
-    private static final String imagen= "media/Space-Transparent.png";
-    private static final String imagen2= "media/racket.png";
-     private static final String ball="media/ball.png";
     public Model modelo;
     public Controlador controller;
 //ATRUBUTOS
@@ -50,31 +46,9 @@ public class Vista extends JFrame implements java.util.Observer {
      private final BufferedImage racketImage;
     private final BufferedImage ball2Image;
     private javax.swing.JButton Boton;
- 
-    public Model getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Model modelo) {
-        this.modelo = modelo;
-    }
-
-    public Controlador getControl() {
-        return controller;
-    }
-    
-
-    public void setControl(Controlador control) {
-        this.controller = control;
-    }
-    
-    @Override
-   public void update(Observable o, Object arg){
-       this.repaint();
-   }
     public Vista() throws IOException{
         Puntaje = new javax.swing.JTextField();
-         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         BarraMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         JMenuFileExit = new javax.swing.JMenu();
@@ -84,19 +58,19 @@ public class Vista extends JFrame implements java.util.Observer {
         jMenuAboutDogeBall = new javax.swing.JMenu();
         
         
-         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+                jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 100, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+                jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 100, Short.MAX_VALUE)
         );
         
-            jMenu1.setText("File");
-
+        jMenu1.setText("File");
+        
         JMenuFileExit.setText("Exit");
         JMenuFileExit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,8 +114,8 @@ public class Vista extends JFrame implements java.util.Observer {
         BarraMenu.add(jMenuAbout);
         
         
-
-
+        
+        
         setJMenuBar(BarraMenu);
         File file = new File(imagen);
         File file2 = new File(imagen2);
@@ -152,9 +126,9 @@ public class Vista extends JFrame implements java.util.Observer {
         this.setContentPane(new JPanel(){
             @Override
             public void paint(Graphics g){
-             int x=((int)modelo.marco.x-modelo.marco.radio)+130;
-            int y=((int)modelo.marco.y-modelo.marco.getRadio()+170);
-            g.drawImage(ballImage,x,y,this); 
+                int x=((int)modelo.marco.x-modelo.marco.radio)+130;
+                int y=((int)modelo.marco.y-modelo.marco.getRadio()+170);
+                g.drawImage(ballImage,x,y,this); 
             }
         });
         this.setSize(800, 700);
@@ -162,19 +136,41 @@ public class Vista extends JFrame implements java.util.Observer {
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.addKeyListener( new java.awt.event.KeyAdapter()
         {
-           @Override
-           public void keyPressed(java.awt.event.KeyEvent evt){
-               formKeyPressed(evt);
-           } 
-           @Override
-           public void keyReleased(java.awt.event.KeyEvent evt){
-               formKeyReleased(evt);
-           }
-                  } );
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt){
+                formKeyPressed(evt);
+            }
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent evt){
+                formKeyReleased(evt);
+            }
+        } );
         
         
         
     }
+ 
+    public Model getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Model modelo) {
+        this.modelo = modelo;
+    }
+
+    public Controlador getControl() {
+        return controller;
+    }
+    
+
+    public void setControl(Controlador control) {
+        this.controller = control;
+    }
+    
+    @Override
+   public void update(Observable o, Object arg){
+       this.repaint();
+   }
     private void renderPuntos(Model m){
         Puntaje.setBackground(new java.awt.Color(0, 0, 0));
         Puntaje.setFont(new java.awt.Font("Engravers MT", 3, 40)); // NOI18N
@@ -274,6 +270,8 @@ public class Vista extends JFrame implements java.util.Observer {
        renderPuntos(m);
        
        
+       
+     
         
     }
     void renderMarco(MarcoRedondo mar, Graphics media){
